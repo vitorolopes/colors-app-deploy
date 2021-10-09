@@ -25,8 +25,13 @@ class App extends Component {
           <Route 
             exact
             path="/palette/:paletteId/:colorId"
-            render={ () => <SingleColorPalette/>}
-            />
+            render={ routeProps => 
+              <SingleColorPalette
+                palette={generate3DPalette(this.findPalette(routeProps.match.params.paletteId))} // The 3D palette.
+                colorId={routeProps.match.params.colorId} // The color from that palette that the user wants to see the shades of.
+              />
+            }
+          />
 
           <Route 
             exact
