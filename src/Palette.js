@@ -3,6 +3,8 @@ import Navbar from './Navbar';
 import ColorBox from './ColorBox';
 import './Palette.css';     
 
+import PalettesFooter from './PalettesFooter';
+
 class Palette extends Component {
     constructor(props){
         super(props);
@@ -36,16 +38,16 @@ class Palette extends Component {
                 <Navbar level={level}
                         changeLevel={this.changeLevel}
                         handleChange={this.changeFormat}
+                        showShadesSlider={true}
                 />
                 <div className="Palette-colors">
                     {colorBoxes}
                 </div>  
 
-                <footer className="Palette-footer">
-                    {paletteName}
-                    <span className="emoji">{emoji}</span>
-                </footer>
-
+                <PalettesFooter
+                   paletteName={paletteName} emoji={emoji}
+                />
+                
             </div>
         )
     }

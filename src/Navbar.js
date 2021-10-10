@@ -31,7 +31,7 @@ class Navbar extends Component {
     }
  
     render() {
-        const {level, changeLevel} = this.props;
+        const {level, changeLevel, showShadesSlider} = this.props;
         const {isSnackbarOpen} = this.state;
         return(    
 
@@ -41,18 +41,21 @@ class Navbar extends Component {
                     <Link to="/">React Color Picker</Link>
                 </div>
 
-                <div className="slider-container">
-                    <span>Level:{level} </span>
-                    <div className="slider">
-                        <Slider
-                            min={100}
-                            max={900}
-                            step={100}
-                            defaultValue={level}
-                            onAfterChange={changeLevel}
-                        />   
+                {showShadesSlider &&
+                   ( <div className="slider-container">
+                        <span>Level:{level} </span>
+                        <div className="slider">
+                            <Slider
+                                min={100}
+                                max={900}
+                                step={100}
+                                defaultValue={level}
+                                onAfterChange={changeLevel}
+                            />   
+                        </div>
                     </div>
-                </div>
+                    )
+                }
 
                 <div className="select-container">
                     <Select value={this.state.format} onChange={this.handleFormatChange}>
