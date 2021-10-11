@@ -30,7 +30,7 @@ class Palette extends Component {
                 name={color.name} 
                 key={color.id}
                 moreURL={`/palette/${id}/${color.id}`}
-                showLink={true}
+                show3DPalette={true}
             />
         ))
         return(
