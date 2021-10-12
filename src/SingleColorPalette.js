@@ -40,7 +40,7 @@ class SingleColorPalette extends Component {
                 background={color[format]}
                 name={color.name}
                 key={color.name}     
-                show3DPalette={false}
+                showing3DPalette={false}
             />
         ))
 
