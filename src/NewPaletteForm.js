@@ -10,16 +10,14 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-
 import { ChromePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
+
+import DraggableColorBox from './DraggableColorBox';
 
 import styles from './styles/NewPaletteFormStyles'
 
 class NewPaletteForm extends Component {
-//   state = {
-//     open: false
-//   };
   constructor(props){
       super(props);
       this.state = { 
@@ -103,9 +101,7 @@ class NewPaletteForm extends Component {
           </div>
           
           <ChromePicker
-            // color="blue"
             color={currentColor}
-            // onChangeComplete = { newColor => console.log(newColor)}
             onChangeComplete = { this.updateCurrentColor}
           />
 
@@ -124,14 +120,10 @@ class NewPaletteForm extends Component {
           })}
         >
           <div className={classes.drawerHeader} />
-
-          <ul>
+         
               {newPaletteColors.map( color => (
-                  <li style={{backgroundColor: color}}>
-                      {color}
-                  </li>
+                 <DraggableColorBox color= {color} />
               ))}
-          </ul>
 
         </main>
 
