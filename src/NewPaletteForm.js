@@ -90,6 +90,7 @@ class NewPaletteForm extends Component {
         <CssBaseline />
         <AppBar
           position='fixed'
+          color="default"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open
           })}
@@ -121,7 +122,6 @@ class NewPaletteForm extends Component {
                   Save Palette
                 </Button>
             </ValidatorForm>
-               
 
           </Toolbar>
         </AppBar>
