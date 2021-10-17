@@ -10,10 +10,14 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { ChromePicker } from 'react-color';
 import Button from '@material-ui/core/Button';
-import DraggableColorBox from './DraggableColorBox';
+import { ChromePicker } from 'react-color';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+
+import {arrayMove} from 'react-sortable-hoc';
+// import DraggableColorBox from './DraggableColorBox';
+import DraggableColorList from './DraggableColorList';
+
 import styles from './styles/NewPaletteFormStyles'
 
 class NewPaletteForm extends Component {
@@ -30,6 +34,7 @@ class NewPaletteForm extends Component {
       this.addNewColor = this.addNewColor.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.removeColor= this.removeColor.bind(this);
   }  
 
   componentDidMount() {
@@ -66,7 +71,6 @@ class NewPaletteForm extends Component {
   }
 
   handleChange(evt){
-      // this.setState( {newName: evt.target.value} )
       this.setState( {[evt.target.name]: evt.target.value} )
   }
 
@@ -82,11 +86,16 @@ class NewPaletteForm extends Component {
   }
 
   removeColor(colorName){
-    // console.log(colorName)
     this.setState({
       newPaletteColors: this.state.newPaletteColors.filter( color => color.name !== colorName)
     })
   }
+
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState(({ newPaletteColors }) => ({
+      newPaletteColors: arrayMove(newPaletteColors, oldIndex, newIndex)
+    }));
+  };
 
   render() {
     const { classes } = this.props;
@@ -192,12 +201,19 @@ class NewPaletteForm extends Component {
         >
           <div className={classes.drawerHeader} />
          
-              {newPaletteColors.map( color => (
+              {/* {newPaletteColors.map( color => (
                   <DraggableColorBox color= {color.color} name={color.name}
                     handleClick={ () => this.removeColor(color.name)}
                     key={color.name}
                   />
-              ))}
+              ))} */}
+
+              <DraggableColorList
+                newPaletteColors={newPaletteColors}
+                removeColor={this.removeColor}
+                axis="xy"
+                onSortEnd={this.onSortEnd}
+              />
 
         </main>
 
