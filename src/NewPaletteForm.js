@@ -21,12 +21,17 @@ import DraggableColorList from './DraggableColorList';
 import styles from './styles/NewPaletteFormStyles'
 
 class NewPaletteForm extends Component {
+
+  static defaultProps = {
+    maxColors: 20
+  }
+
   constructor(props){
       super(props);
       this.state = { 
           open: true,
           currentColor: "green",
-          newPaletteColors: [],
+          newPaletteColors: this.props.palettes[1].colors,
           newColorName: "",
           newPaletteName: ""    
       }
@@ -34,7 +39,9 @@ class NewPaletteForm extends Component {
       this.addNewColor = this.addNewColor.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.removeColor= this.removeColor.bind(this);
+      this.removeColor = this.removeColor.bind(this);
+      this.clearPalette = this.clearPalette.bind(this);
+      this.addRandomColor = this.addRandomColor.bind(this);
   }  
 
   componentDidMount() {
@@ -97,9 +104,36 @@ class NewPaletteForm extends Component {
     }));
   };
 
+  clearPalette(){
+    this.setState( { newPaletteColors: [] } )
+  }
+
+  addRandomColor(){
+    const allColors = this.props.palettes.map( p => p.colors)
+    // console.log(allColors) this gives us an array of arrays
+                      .flat()
+    // const arr1 = [[2,3],[4,5]]; const arr2=arr1.flat --> [2,3,4,5]
+    let rand;
+    let randomColor = allColors[rand];
+
+    let isDuplicateColor = true;
+    while(isDuplicateColor){
+      rand =  Math.floor(Math.random() * allColors.length); // generate a random index
+      randomColor = allColors[rand]; // get a random color from allColors
+      isDuplicateColor = this.state.newPaletteColors.some( color => color.name === randomColor.name)
+      // true if any of the colors in allColors has the same name as the name of randomColor
+      // in that case ... one more iteration.
+      // If false the while loop ends.
+    }
+
+    this.setState( {newPaletteColors: [...this.state.newPaletteColors, randomColor]} )
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, maxColors } = this.props;
     const { open, currentColor, newPaletteColors } = this.state;
+
+    const paletteIsFull = newPaletteColors.length >= maxColors;
 
     return (
       <div className={classes.root}>
@@ -162,10 +196,15 @@ class NewPaletteForm extends Component {
             <Typography variant="h4" >Design Your Palette</Typography>
 
             <div>
-                <Button variant="contained" color="secondary">
+                <Button variant="contained" color="secondary"
+                        onClick={this.clearPalette}
+                >
                   Clear Palette
                 </Button>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary"
+                        onClick={this.addRandomColor}  
+                        disabled={paletteIsFull}
+                >
                   Random Color
                 </Button>
             </div>
@@ -184,11 +223,12 @@ class NewPaletteForm extends Component {
                 />
                     
                 <Button variant="contained"
-                        color="primary"
-                        style={{backgroundColor: currentColor}} 
+                        color="primary"                      
+                        style={{backgroundColor: paletteIsFull ? "grey" : currentColor}} 
+                        disabled={paletteIsFull}
                         type="submit"
                 >
-                    Add Color
+                    {paletteIsFull ? "Palette Full" : "Add Color"}
                 </Button>
             </ValidatorForm>
 
@@ -199,15 +239,8 @@ class NewPaletteForm extends Component {
             [classes.contentShift]: open
           })}
         >
-          <div className={classes.drawerHeader} />
-         
-              {/* {newPaletteColors.map( color => (
-                  <DraggableColorBox color= {color.color} name={color.name}
-                    handleClick={ () => this.removeColor(color.name)}
-                    key={color.name}
-                  />
-              ))} */}
-
+          <div className={classes.drawerHeader} /> 
+        
               <DraggableColorList
                 newPaletteColors={newPaletteColors}
                 removeColor={this.removeColor}

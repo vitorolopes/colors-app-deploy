@@ -19,7 +19,6 @@ class App extends Component {
     this.findPalette = this.findPalette.bind(this);
   }
 
-
   findPalette(id){
     return this.state.palettes.find( (palette) => (
       palette.id === id
