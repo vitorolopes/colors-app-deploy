@@ -2,7 +2,7 @@
 import chroma from 'chroma-js';
 export default{ 
         ColorBox: {
-            height: props => props.show3DPalette ? "25%" : "50%",
+            height: props => props.showing3DPalette ? "25%" : "50%",
             width: "20%",
             margin: "0 auto",
             display: "inline-block",
