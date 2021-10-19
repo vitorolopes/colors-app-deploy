@@ -3,11 +3,16 @@ import Button from '@material-ui/core/Button';
 import { ChromePicker } from 'react-color';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
+import { withStyles } from "@material-ui/core/styles";
+import styles from './styles/NewPaletteFormCPickerStyles';
+import { mergeClasses } from "@material-ui/styles";
+import { CallMissedSharp } from "@material-ui/icons";
+
 class NewPaletteFormCPicker extends Component {
     constructor(props){
       super(props);
        this.state = {
-        currentColor: "yellow",
+        currentColor: "blue",
         newColorName: ""
        }
        this.updateCurrentColor = this.updateCurrentColor.bind(this);
@@ -41,13 +46,14 @@ class NewPaletteFormCPicker extends Component {
     }
 
     render() {
-        const {paletteIsFull} = this.props;
+        const {paletteIsFull, classes} = this.props;
         const {currentColor, newColorName} = this.state;
         return(
-            <div> 
+            <div className={classes.root}> 
                 <ChromePicker
                 color={currentColor}
                 onChangeComplete = { this.updateCurrentColor}
+                className={classes.picker}
                 />
 
                 <ValidatorForm onSubmit={this.handleSubmit}>
@@ -56,6 +62,10 @@ class NewPaletteFormCPicker extends Component {
                                 onChange={this.handleChange}
                                 validators={["required", "isColorNameUnique", "isColorUnique"]}
                                 errorMessages={["This field is required", "Color name must be unique", "Color already used"]}
+                                className={classes.colorNameInput}
+                                variant="filled"
+                                margin="normal"
+                                placeholder="Color Name"
                     />
                         
                     <Button variant="contained"
@@ -63,6 +73,7 @@ class NewPaletteFormCPicker extends Component {
                             style={{backgroundColor: paletteIsFull ? "grey" : currentColor}} 
                             disabled={paletteIsFull}
                             type="submit"
+                            className={classes.addColor}
                     >
                         {paletteIsFull ? "Palette Full" : "Add Color"}
                     </Button>
@@ -72,4 +83,5 @@ class NewPaletteFormCPicker extends Component {
     }
 }
 
-export default NewPaletteFormCPicker ;
+// export default NewPaletteFormCPicker ;
+export default withStyles(styles, { withTheme: true }) (NewPaletteFormCPicker);

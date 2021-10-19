@@ -98,7 +98,9 @@ class NewPaletteForm extends Component {
 
     return (
       <div className={classes.root}>
-        <NewPaletteFormNav open={open} classes={classes} palettes={palettes}
+        <NewPaletteFormNav open={open} 
+                          //  classes={classes} 
+                           palettes={palettes}
                            handleSubmit={this.handleSubmit}
                            handleDrawerOpen={this.handleDrawerOpen}
         />
@@ -120,27 +122,34 @@ class NewPaletteForm extends Component {
            
             <Divider />
 
-            <Typography variant="h4" >Design Your Palette</Typography>
+            <div className={classes.container}>
 
-            <div>
-                <Button variant="contained" color="secondary"
-                        onClick={this.clearPalette}
-                >
-                  Clear Palette
-                </Button>
-                <Button variant="contained" color="primary"
-                        onClick={this.addRandomColor}  
-                        disabled={paletteIsFull}
-                >
-                  Random Color
-                </Button>
-            </div>
-            
-            <NewPaletteFormCPicker 
-                paletteIsFull={paletteIsFull}
-                addNewColor={this.addNewColor}
-                newPaletteColors={newPaletteColors}
-            />    
+              <Typography variant="h4" gutterBottom >Design Your Palette</Typography>
+
+              <div className={classes.buttons}>
+                  <Button variant="contained" color="secondary"
+                          onClick={this.clearPalette}
+                          className={classes.button}
+                  >
+                    Clear Palette
+                  </Button>
+                  <Button variant="contained" color="primary"
+                          onClick={this.addRandomColor}  
+                          disabled={paletteIsFull}
+                          className={classes.button}
+                  >
+                    Random Color
+                  </Button>
+              </div>
+              
+              <NewPaletteFormCPicker 
+                  paletteIsFull={paletteIsFull}
+                  addNewColor={this.addNewColor}
+                  newPaletteColors={newPaletteColors}
+              />   
+
+            </div> 
+
         </Drawer>
 
         <main
