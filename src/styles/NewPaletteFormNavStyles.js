@@ -14,7 +14,8 @@ const styles = theme => ({
 
     flexDirection: "row",
     justifyContent: "space-between",
-    height: "64px"
+    height: "64px",
+    alignItems: "center"
   },
 
   appBarShift: {
@@ -34,7 +35,14 @@ const styles = theme => ({
     width: "60%",
     display: "flex",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
+    marginRight: "1rem",
+    "& a": {
+      textDecoration: "none"
+    }
+  },
+  button:{
+    margin:"0 0.5rem"
   },
   validatorForm:{
     // border:"5px solid red",
