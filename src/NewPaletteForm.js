@@ -49,12 +49,18 @@ class NewPaletteForm extends Component {
       this.setState( {[evt.target.name]: evt.target.value} )
   }
 
-  handleSubmit(newPaletteName){
-     const newPalette={
-      paletteName: newPaletteName,
-      id: newPaletteName.toLowerCase().replace(/ /g,"-"),
-      colors: this.state.newPaletteColors
-    };
+  // handleSubmit(newPaletteName){
+  //    const newPalette={
+  //     paletteName: newPaletteName,
+  //     id: newPaletteName.toLowerCase().replace(/ /g,"-"),
+  //     colors: this.state.newPaletteColors
+  //   };
+  //   this.props.savePalette(newPalette);
+  //   this.props.history.push("/");
+  // }
+  handleSubmit(newPalette){
+    newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g,"-")
+    newPalette.colors = this.state.newPaletteColors
     this.props.savePalette(newPalette);
     this.props.history.push("/");
   }
@@ -78,7 +84,6 @@ class NewPaletteForm extends Component {
   addRandomColor(){
     const allColors = this.props.palettes.map( p => p.colors).flat()
     let rand;
-    // let randomColor = allColors[rand];
     let randomColor;
 
     let isDuplicateColor = true;
