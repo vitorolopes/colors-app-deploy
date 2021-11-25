@@ -1,20 +1,42 @@
+import React, {Component} from 'react';
 import { withStyles } from '@material-ui/styles';
-import React from 'react';
+import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './styles/MiniPaletteStyles';
 
-function MiniPalette(props){
-    const {classes, paletteName, emoji, colors} = props;
-    const miniColorBoxes = colors.map( color => (
+class MiniPalette extends Component{
+    constructor(props){
+        super(props)
+        this.callDeletePalette_b = this.callDeletePalette_b.bind(this);
+    }
+
+    callDeletePalette_b(e){
+        e.stopPropagation();
+        this.props.callDeletePalette_a(this.props.id)
+    }
+
+    render(){
+      const {classes, paletteName, emoji, colors, handleClick} = this.props;
+      const miniColorBoxes = colors.map( color => (
         <div
             className={classes.miniColor}
             style={{background: color.color}}
             key={color.name}
         ></div>
-    ))
+      ))
 
     return (
-        <div className={classes.root} onClick={props.handleClick}>
+        <div className={classes.root} onClick={handleClick}>
          
+            <div>
+                <DeleteIcon
+                  className={classes.deleteIcon}
+                  style={{transition: "all 0.75s ease-in-out"}}
+
+                  onClick={this.callDeletePalette_b}
+
+                />
+            </div>
+
             <div className={classes.colors}>
                     {miniColorBoxes}
             </div>
@@ -28,6 +50,6 @@ function MiniPalette(props){
 
         </div>
     )
-
+    }
 }
 export default withStyles(styles) (MiniPalette);
