@@ -3,7 +3,7 @@
 
 const styles = theme => ({
   root:{
-    border: "red solid 1px"
+    // border: "red solid 1px"
   },
 
   picker:{
