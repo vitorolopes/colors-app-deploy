@@ -1,14 +1,33 @@
 /* eslint-disable import/no-anonymous-default-export */
 import sizes from './sizes';
+import bg from './bg.svg';
 
 export default{
+  "@global":{
+    ".fade-exit":{
+      opacity: 1
+    },
+    ".fade-exit-active":{
+      opacity: 0,
+      transition: "opacity 1000ms ease-out"
+    }
+  },
+
     root:{
-        backgroundColor: "blue",
+        backgroundColor: "#241DAA",
+        backgroundImage: `url(${bg})`,
+        overflow: "scroll",
+
         height: "100vh",
         display: "flex",
         justifyContent:"center",
         alignItems: "flex-start"
     },
+
+    heading:{
+      fontSize: "2rem"
+    },
+
     container:{
         width: "50%",
         display: "flex",
@@ -20,19 +39,19 @@ export default{
             width: "80%",
           },
           [sizes.down("xs")]: {
-            width: "70%",
+            width: "75%",
           }
     },
     nav:{
         display: "flex",
-        width: "100%",
+        width: "100%", 
         justifyContent:"space-between",
         color: "white",
         alignItems: "center",
         "& a":{
             color: "white",
-            textDecoration: "none"
-        }
+            textDecoration: "none",
+        },
     },
     palettes:{
         width:"100%",
