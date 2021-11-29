@@ -11,7 +11,8 @@ class MiniPalette extends Component{
 
     callDeletePalette_b(e){
         e.stopPropagation();
-        this.props.callDeletePalette_a(this.props.id)
+        // this.props.callDeletePalette_a(this.props.id)
+        this.props.openDialog(this.props.id)
     }
 
     render(){
