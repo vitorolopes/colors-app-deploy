@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 import React, { Component } from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -13,6 +14,8 @@ import NewPaletteFormNav from './NewPaletteFormNav';
 import NewPaletteFormCPicker from './NewPaletteFormCPicker';
 import styles from './styles/NewPaletteFormStyles'
 
+import seedColors from './seedColors';
+
 class NewPaletteForm extends Component {
   static defaultProps = {
     maxColors: 20
@@ -22,7 +25,8 @@ class NewPaletteForm extends Component {
       super(props);
       this.state = { 
           open: true,
-          newPaletteColors: this.props.palettes[1].colors,
+          // newPaletteColors: this.props.palettes[1].colors,
+          newPaletteColors: seedColors[2].colors,
       }
       this.addNewColor = this.addNewColor.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -73,7 +77,9 @@ class NewPaletteForm extends Component {
   }
 
   addRandomColor(){
-    const allColors = this.props.palettes.map( p => p.colors).flat()
+    //! const allColors = this.props.palettes.map( p => p.colors).flat()
+    const allColors = seedColors.map( p => p.colors).flat()
+    
     let rand;
     let randomColor;
 

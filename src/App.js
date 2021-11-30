@@ -112,7 +112,7 @@ class App extends Component {
                             </Page>
 
                           )}
-                        />
+                        />              
 
                       </Switch>
 
