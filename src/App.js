@@ -3,10 +3,14 @@ import { Route, Switch } from 'react-router-dom';
 import Palette from './Palette';
 import PaletteList from './PaletteList';
 import SingleColorPalette from './SingleColorPalette';
+
+import Page from './Page';
+
 import seedColors from './seedColors';
 import {generate3DPalette} from './colorHelpers';
-import './App.css';
+// import './App.css';
 import NewPaletteForm from './NewPaletteForm';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 
 class App extends Component {
@@ -46,47 +50,76 @@ class App extends Component {
 
   render(){
       return (
+        <Route
+          render={ ({location}) => (
+            <TransitionGroup>
+              <CSSTransition classNames="page" timeout={500} key={location.key}>
 
-        <Switch>
+                      <Switch location={location}>
 
-          <Route
-            exact
-            path="/palette/new"
-            render={ (routeProps) => <NewPaletteForm 
-                                        savePalette={this.savePalette}
-                                        {...routeProps}   
-                                        palettes={this.state.palettes}
-                                     /> }
-          />
+                        <Route
+                          exact
+                          path="/palette/new"
+                          render={ routeProps => (
 
-          <Route 
-            exact
-            path="/palette/:paletteId/:colorId"
-            render={ routeProps => 
-              <SingleColorPalette
-                palette={generate3DPalette(this.findPalette(routeProps.match.params.paletteId))} // The 3D palette.
-                colorId={routeProps.match.params.colorId} // The color from that palette that the user wants to see the shades of.
-              />
-            }
-          />
+                            <Page>
+                              <NewPaletteForm 
+                                      savePalette={this.savePalette}
+                                      {...routeProps}   
+                                      palettes={this.state.palettes}
+                                />
+                            </Page>
 
-          <Route 
-            exact
-            path="/" 
-            render={ routeProps => 
-              <PaletteList palettes={this.state.palettes} {...routeProps}
-                           deletePalette={this.deletePalette}
-              />}
-          />
-    
-          <Route 
-            exact
-            path="/palette/:id"
-            render={ routeProps => 
-               <Palette palette={generate3DPalette(this.findPalette(routeProps.match.params.id))}/>}
-          />
+                          )}                            
+                        />
 
-        </Switch>
+                        <Route 
+                          exact
+                          path="/palette/:paletteId/:colorId"
+                          render={ routeProps => (
+
+                            <Page>
+                              <SingleColorPalette
+                                palette={generate3DPalette(this.findPalette(routeProps.match.params.paletteId))} // The 3D palette.
+                                colorId={routeProps.match.params.colorId} // The color from that palette that the user wants to see the shades of.
+                              />
+                            </Page>
+
+                          )}
+                        />
+
+                        <Route 
+                          exact
+                          path="/" 
+                          render={ routeProps => (
+
+                            <Page>
+                              <PaletteList palettes={this.state.palettes} {...routeProps}
+                                          deletePalette={this.deletePalette}
+                              />
+                            </Page>  
+
+                          )}
+                        />
+                  
+                        <Route 
+                          exact
+                          path="/palette/:id"
+                          render={ routeProps => (
+
+                            <Page>
+                              <Palette palette={generate3DPalette(this.findPalette(routeProps.match.params.id))}/>
+                            </Page>
+
+                          )}
+                        />
+
+                      </Switch>
+
+              </CSSTransition>
+            </TransitionGroup>
+         )}  
+        />
       );
   }
 
